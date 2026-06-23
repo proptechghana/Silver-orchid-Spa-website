@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'motion/react';
-import { ReactNode } from 'react';
+import { motion, useInView } from 'motion/react';
+import { ReactNode, useRef } from 'react';
 
 interface FadeInProps {
   children: ReactNode;
@@ -20,6 +20,9 @@ export default function FadeIn({
   direction = 'up',
   distance = 30,
 }: FadeInProps) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+
   const directions = {
     up: { y: distance },
     down: { y: -distance },
@@ -30,9 +33,9 @@ export default function FadeIn({
 
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, ...directions[direction] }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
+      animate={isInView ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, ...directions[direction] }}
       transition={{
         duration,
         delay,
