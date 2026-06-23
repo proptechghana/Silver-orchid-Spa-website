@@ -1,0 +1,6 @@
+{
+  "name": "Silver Orchid Spa",
+  "description": "Minimalist landing page for Silver Orchid 24hours Massage and Spa in Accra, Ghana.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
