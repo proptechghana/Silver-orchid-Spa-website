@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 
 const REVIEWS = [
   {
@@ -201,30 +200,24 @@ export default function ReviewsCarousel() {
           {[1,2,3,4,5].map(i => <Star key={i} className="w-5 h-5 fill-current" />)}
         </div>
         
-        <div className="relative h-[200px] md:h-[160px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="absolute inset-0"
-            >
-              <p className="text-lg md:text-xl text-[#3A352F] leading-relaxed mb-8 font-medium line-clamp-4">
-                {currentReview.text}
-              </p>
-              <div className="flex items-center gap-4">
-                <div className={`w-14 h-14 ${currentReview.color} rounded-full flex items-center justify-center font-serif text-white font-medium text-xl shadow-sm`}>
-                  {currentReview.initials}
-                </div>
-                <div>
-                  <h4 className="font-serif text-xl text-[#3A352F]">{currentReview.name}</h4>
-                  <p className="text-sm text-[#706B64] mt-0.5">{currentReview.location} · {currentReview.date}</p>
-                </div>
+        <div className="relative h-[200px] md:h-[160px] overflow-hidden">
+          <div
+            className="absolute inset-0 transition-all duration-500 ease-in-out"
+            style={{ opacity: 1, transform: 'translateY(0)' }}
+          >
+            <p className="text-lg md:text-xl text-[#3A352F] leading-relaxed mb-8 font-medium line-clamp-4">
+              {currentReview.text}
+            </p>
+            <div className="flex items-center gap-4">
+              <div className={`w-14 h-14 ${currentReview.color} rounded-full flex items-center justify-center font-serif text-white font-medium text-xl shadow-sm`}>
+                {currentReview.initials}
               </div>
-            </motion.div>
-          </AnimatePresence>
+              <div>
+                <h4 className="font-serif text-xl text-[#3A352F]">{currentReview.name}</h4>
+                <p className="text-sm text-[#706B64] mt-0.5">{currentReview.location} · {currentReview.date}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       

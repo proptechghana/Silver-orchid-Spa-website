@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 import { Menu, Phone, MapPin, Clock, Star, ChevronLeft, ChevronRight, MessageCircle, ChevronDown, X } from 'lucide-react';
 import Chatbot from '@/components/Chatbot';
@@ -22,20 +21,14 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
           className={`w-5 h-5 text-[#3A352F] hover:text-[#CC7A60] transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
         />
       </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div 
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden"
-          >
-            <p className="pb-6 text-[#5A554F] leading-relaxed">
-              {answer}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div 
+        className="overflow-hidden transition-all duration-300 ease-in-out"
+        style={{ maxHeight: isOpen ? '500px' : '0', opacity: isOpen ? 1 : 0 }}
+      >
+        <p className="pb-6 text-[#5A554F] leading-relaxed">
+          {answer}
+        </p>
+      </div>
     </div>
   );
 }
@@ -96,32 +89,26 @@ export default function Home() {
           </button>
         </div>
 
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div 
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="fixed top-20 left-0 w-full h-[calc(100dvh-80px)] bg-[#F5F2EF] z-40 flex flex-col px-6 pb-6 md:hidden overflow-hidden"
-            >
-              <div className="flex flex-col gap-6 text-2xl font-serif text-[#2C382A] mt-8">
-                <span className="cursor-pointer hover:text-[#C97A5E] transition-colors border-b border-[#EBE7DF] pb-4" onClick={() => scrollToSection('services')}>Services</span>
-                <span className="cursor-pointer hover:text-[#C97A5E] transition-colors border-b border-[#EBE7DF] pb-4" onClick={() => scrollToSection('reviews')}>Reviews</span>
-                <span className="cursor-pointer hover:text-[#C97A5E] transition-colors border-b border-[#EBE7DF] pb-4" onClick={() => scrollToSection('faq')}>FAQ</span>
-                <span className="cursor-pointer hover:text-[#C97A5E] transition-colors border-b border-[#EBE7DF] pb-4" onClick={() => scrollToSection('contact')}>Contact</span>
-              </div>
-              
-              <button className="mt-8 bg-[#C97A5E] text-white px-7 py-4 rounded-full text-lg font-semibold tracking-wide hover:bg-[#B3694F] transition-colors w-full" onClick={() => scrollToSection('chatbot')}>
-                Book Now
-              </button>
-              
-              <div className="mt-auto pt-8 border-t border-[#EBE7DF] flex gap-4 text-[#73826C] justify-center items-center">
-                <Clock className="w-4 h-4" />
-                <span className="text-sm font-medium">Open 24/7 Hours</span>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div 
+          className="fixed top-20 left-0 w-full h-[calc(100dvh-80px)] bg-[#F5F2EF] z-40 flex flex-col px-6 pb-6 md:hidden overflow-hidden transition-all duration-300 ease-in-out"
+          style={{ opacity: isMobileMenuOpen ? 1 : 0, transform: isMobileMenuOpen ? 'translateY(0)' : 'translateY(-20px)', pointerEvents: isMobileMenuOpen ? 'auto' : 'none' }}
+        >
+          <div className="flex flex-col gap-6 text-2xl font-serif text-[#2C382A] mt-8">
+            <span className="cursor-pointer hover:text-[#C97A5E] transition-colors border-b border-[#EBE7DF] pb-4" onClick={() => scrollToSection('services')}>Services</span>
+            <span className="cursor-pointer hover:text-[#C97A5E] transition-colors border-b border-[#EBE7DF] pb-4" onClick={() => scrollToSection('reviews')}>Reviews</span>
+            <span className="cursor-pointer hover:text-[#C97A5E] transition-colors border-b border-[#EBE7DF] pb-4" onClick={() => scrollToSection('faq')}>FAQ</span>
+            <span className="cursor-pointer hover:text-[#C97A5E] transition-colors border-b border-[#EBE7DF] pb-4" onClick={() => scrollToSection('contact')}>Contact</span>
+          </div>
+          
+          <button className="mt-8 bg-[#C97A5E] text-white px-7 py-4 rounded-full text-lg font-semibold tracking-wide hover:bg-[#B3694F] transition-colors w-full" onClick={() => scrollToSection('chatbot')}>
+            Book Now
+          </button>
+          
+          <div className="mt-auto pt-8 border-t border-[#EBE7DF] flex gap-4 text-[#73826C] justify-center items-center">
+            <Clock className="w-4 h-4" />
+            <span className="text-sm font-medium">Open 24/7 Hours</span>
+          </div>
+        </div>
       </nav>
 
       {/* Hero Section */}
